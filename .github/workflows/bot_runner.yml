@@ -1,0 +1,40 @@
+name: 24/7 AI Bot Cloud Runner (Pixabay Rotation)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */5 * * *'
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install FFmpeg
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+
+    - name: Install Python Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Launch Super AI Video Agent
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        GEMINI_API_KEY_1: ${{ secrets.GEMINI_API_KEY_1 }}
+        GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+        GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+        PIXABAY_API_KEY_1: ${{ secrets.PIXABAY_API_KEY_1 }}
+        PIXABAY_API_KEY_2: ${{ secrets.PIXABAY_API_KEY_2 }}
+        PIXABAY_API_KEY_3: ${{ secrets.PIXABAY_API_KEY_3 }}
+      run: |
+        python bot_master.py
