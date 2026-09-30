@@ -1,0 +1,9 @@
+python-telegram-bot==20.7
+google-genai
+edge-tts
+openai-whisper
+moviepy==1.0.3
+pydub
+requests
+pillow
+deep-translator
